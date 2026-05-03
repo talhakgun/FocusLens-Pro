@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 340px; padding: 15px; font-family: 'Segoe UI', sans-serif; background: #fff; }
+    h3 { margin: 0 0 10px 0; font-size: 16px; color: #0078d4; border-bottom: 2px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+    .section-title { font-size: 11px; font-weight: bold; color: #888; margin: 10px 0 5px 0; text-transform: uppercase; }
+    #tagList { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; min-height: 30px; }
+    .tag-item { background: #f0f0f0; padding: 4px 10px; border-radius: 4px; border: 1px solid #ddd; cursor: pointer; font-size: 11px; font-weight: bold; }
+    .tag-item.active { background: #0078d4; color: white; border-color: #005a9e; }
+    .setting-group { margin-bottom: 12px; padding: 10px; background: #f9f9f9; border-radius: 6px; border: 1px solid #eee; }
+    .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    label { font-size: 12px; font-weight: bold; color: #555; }
+    .value-display { font-size: 11px; color: #0078d4; font-weight: bold; }
+    input[type="range"], input[type="color"] { width: 100%; cursor: pointer; }
+    select { width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; background: #fff; cursor: pointer; appearance: auto; }
+    select:focus { outline: none; border-color: #0078d4; }
+    .btn-reset {
+      width: 100%; padding: 8px 0; margin: 8px 0 4px 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; border: none; border-radius: 6px; font-size: 12px;
+      font-weight: bold; cursor: pointer; transition: all 0.2s ease;
+      letter-spacing: 0.3px;
+    }
+    .btn-reset:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102,126,234,0.35); }
+    .btn-reset:active { transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <h3>FocusLens Pro <input type="checkbox" id="focusToggle"></h3>
+
+  <button class="btn-reset" id="resetDefaults">↺ Varsayılana Dön</button>
+
+  <div class="section-title">Element Seç ve Düzenle</div>
+  <div id="tagList">Analiz ediliyor...</div>
+
+  <div id="editorPanel" style="display:none;">
+    <div class="section-title" id="activeTagName" style="color: #0078d4;">Düzenlenen: -</div>
+    <div class="setting-group">
+      <div class="label-row"><label>Yazı Boyutu</label><span class="value-display" id="fontSizeVal">18px</span></div>
+      <input type="range" id="fontSize" min="12" max="60" value="18">
+      <div class="label-row" style="margin-top:10px;"><label>Satır Aralığı</label><span class="value-display" id="lineHeightVal">1.9</span></div>
+      <input type="range" id="lineHeight" min="1.0" max="4.0" step="0.1" value="1.9">
+      <div class="label-row" style="margin-top:10px;"><label>Yazı Rengi</label></div>
+      <input type="color" id="fontColor" value="#d0d3dc">
+    </div>
+  </div>
+
+
+  <div class="setting-group">
+    <div class="section-title">Genel Görünüm</div>
+    <div class="label-row"><label>Arka Plan (Dış)</label></div>
+    <input type="color" id="bgColor" value="#1a1b2e">
+    <div class="label-row" style="margin-top:10px;"><label>Maksimum Genişlik</label><span class="value-display" id="maxWidthVal">1100px</span></div>
+    <input type="range" id="maxWidth" min="500" max="1600" step="10" value="1100">
+  </div>
+
+  <div class="setting-group">
+    <div class="section-title">Çeviri Ayarları (Çift Tıkla) <input type="checkbox" id="translateToggle" checked style="float: right; margin-top: -2px;"></div>
+    <div class="label-row"><label>Kaynak Dil</label></div>
+    <select id="sourceLang">
+      <option value="en">🇬🇧 İngilizce</option>
+      <option value="tr">🇹🇷 Türkçe</option>
+      <option value="de">🇩🇪 Almanca</option>
+      <option value="fr">🇫🇷 Fransızca</option>
+      <option value="es">🇪🇸 İspanyolca</option>
+      <option value="it">🇮🇹 İtalyanca</option>
+      <option value="pt">🇵🇹 Portekizce</option>
+      <option value="ru">🇷🇺 Rusça</option>
+      <option value="ar">🇸🇦 Arapça</option>
+      <option value="ja">🇯🇵 Japonca</option>
+      <option value="zh">🇨🇳 Çince</option>
+      <option value="ko">🇰🇷 Korece</option>
+    </select>
+    <div class="label-row" style="margin-top:10px;"><label>Hedef Dil</label></div>
+    <select id="targetLang">
+      <option value="tr">🇹🇷 Türkçe</option>
+      <option value="en">🇬🇧 İngilizce</option>
+      <option value="de">🇩🇪 Almanca</option>
+      <option value="fr">🇫🇷 Fransızca</option>
+      <option value="es">🇪🇸 İspanyolca</option>
+      <option value="it">🇮🇹 İtalyanca</option>
+      <option value="pt">🇵🇹 Portekizce</option>
+      <option value="ru">🇷🇺 Rusça</option>
+      <option value="ar">🇸🇦 Arapça</option>
+      <option value="ja">🇯🇵 Japonca</option>
+      <option value="zh">🇨🇳 Çince</option>
+      <option value="ko">🇰🇷 Korece</option>
+    </select>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

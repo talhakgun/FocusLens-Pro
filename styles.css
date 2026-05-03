@@ -1,0 +1,84 @@
+/* ===========================
+   TAG LABEL SİSTEMİ
+   Gizli ama hover'da zarif görünüm
+   =========================== */
+
+/* Tag label'lı elementler — sol kenar çizgisi ile ince ipucu */
+[data-tag-label] {
+    position: relative !important;
+    padding-left: 14px !important;
+    border-left: 2px solid transparent !important;
+    transition: border-color 0.25s ease !important;
+    overflow: visible !important;
+    z-index: 10 !important;
+}
+
+/* Hover'da sol kenarda ince renkli çizgi */
+[data-tag-label]:hover {
+    border-left-color: rgba(102, 126, 234, 0.4) !important;
+    z-index: 9999 !important;
+}
+
+/* Tag badge — varsayılan: tamamen gizli */
+[data-tag-label]::before {
+    content: attr(data-tag-label);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateX(calc(-100% - 8px)) translateY(-50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+    z-index: 99999;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Hover'da badge fade-in + slide */
+[data-tag-label]:hover::before {
+    opacity: 0.9;
+    transform: translateX(calc(-100% - 12px)) translateY(-50%);
+}
+
+
+/* ===========================
+   ÇEVİRİ POPUP STİLLERİ
+   =========================== */
+
+#focus-lens-translate-popup {
+    z-index: 2147483647 !important;
+    /* DİĞER TÜM STİLLER CONTENT.JS İÇİNDEN INLINE OLARAK (important! ile) VERİLİYOR */
+}
+
+@keyframes flTranslateIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fl-translate-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.fl-translate-word { font-size: 18px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.3px; }
+.fl-translate-close { background: none; border: none; font-size: 16px; color: #999; cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: all 0.15s ease; }
+.fl-translate-close:hover { background: #f0f0f0; color: #333; }
+.fl-translate-result { font-size: 22px; font-weight: 700; color: #0078d4; margin-bottom: 6px; letter-spacing: -0.3px; }
+.fl-translate-divider { height: 1px; background: #eee; margin: 10px 0; }
+.fl-translate-example-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.fl-translate-example-original { font-size: 13px; color: #555; font-style: italic; line-height: 1.5; margin-bottom: 4px; }
+.fl-translate-example-translated { font-size: 13px; color: #0078d4; font-style: italic; line-height: 1.5; font-weight: 500; }
+.fl-translate-loading { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #888; padding: 4px 0; }
+.fl-translate-spinner { width: 16px; height: 16px; border: 2px solid #e0e0e0; border-top-color: #0078d4; border-radius: 50%; animation: flSpin 0.6s linear infinite; }
+@keyframes flSpin { to { transform: rotate(360deg); } }
+.fl-translate-error { font-size: 13px; color: #d32f2f; padding: 4px 0; }
+.fl-dict-container { margin-top: 8px; max-height: 120px; overflow-y: auto; padding-right: 4px; }
+.fl-dict-container::-webkit-scrollbar { width: 4px; }
+.fl-dict-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+.fl-dict-item { margin-bottom: 6px; }
+.fl-dict-pos { display: inline-block; font-size: 10px; font-weight: 700; color: #667eea; background: rgba(102,126,234,0.1); padding: 2px 6px; border-radius: 4px; text-transform: uppercase; margin-bottom: 3px; }
+.fl-dict-words { font-size: 13px; color: #444; line-height: 1.4; }
